@@ -11,13 +11,12 @@ ec2C = boto3.client('ec2', region_name='ap-south-1')
 
 describeEc2 = ec2C.describe_instances(InstanceIds=[instance_id,])
 source_type = describeEc2['Reservations'][0]['Instances'][0]['InstanceType']
-describeEc2Status = ec2C.describe_instance_status(InstanceIds=[instance_id,])
+describeEc2Status = ec2C.describe_instance_status(InstanceIds=[instance_id,], IncludeAllInstances=True)
 
 if describeEc2Status['InstanceStatuses'][0]['InstanceState']['Name'] == "running":
     ec2C.stop_instances(InstanceIds=[instance_id,])
     for retries in range(1,7):
-        response = ec2C.describe_instance_status(InstanceIds=[instance_id,])
-        print(response)
+        response = ec2C.describe_instance_status(InstanceIds=[instance_id,], IncludeAllInstances=True)
         if response['InstanceStatuses'][0]['InstanceState']['Name'] != "stopped":
             if retries == 6:
                 print("Instance is taking longer than usual time to stop. Better check the status in console")
@@ -44,5 +43,5 @@ for retries in range(1,7):
         break
     time.sleep(retries*60)
 
-upgradedEc2 = ec2C.describe_instances(InstanceIds=[instance_id,])
+upgradedEc2 = ec2C.describe_instances(InstanceIds=[instance_id,], IncludeAllInstances=True)
 upgradedEc2Ip = upgradedEc2['Reservations'][0]['Instances'][0]['PublicIpAddress']
