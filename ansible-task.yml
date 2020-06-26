@@ -1,0 +1,10 @@
+---
+- hosts: "{{ instance_ip }}"
+  become: true
+  tasks:
+  - name: Simple GET operation
+    aws_s3:
+      bucket: mybucket
+      object: /my/desired/key.txt
+      dest: /tmp/"{{ randstring }}"/myfile.txt
+      mode: get
