@@ -17,14 +17,14 @@ describeEc2Status = ec2C.describe_instance_status(InstanceIds=[instance_id,], In
 if describeEc2Status['InstanceStatuses'][0]['InstanceState']['Name'] == "running":
     ec2C.stop_instances(InstanceIds=[instance_id,])
     for retries in range(1,7):
-       # response = ec2C.describe_instance_status(InstanceIds=[instance_id,], IncludeAllInstances=True)
-        response = ec2C.Instance(instance_id)
-        if response.state['Name'] != "stopped":
+        response = ec2C.describe_instance_status(InstanceIds=[instance_id,], IncludeAllInstances=True)
+       # response = ec2C.Instance(instance_id)
+        if response['InstanceStatuses'][0]['InstanceState']['Name'] != "stopped":
             if retries == 6:
                 print("Instance is taking longer than usual time to stop. Better check the status in console")
                 break
             time.sleep(retries*60)
-        elif response.state['Name'] == "stopped":
+        elif response['InstanceStatuses'][0]['InstanceState']['Name'] == "stopped":
             print("Instance successfully stopped")
             break
 
@@ -37,8 +37,8 @@ ec2C.modify_instance_attribute(
 
 ec2C.start_instances(InstanceIds=[instance_id,])
 for retries in range(1,7):
-    response = ec2C.Instance(instance_id)
-    if response.state['Name'] == "running":
+    response = ec2C.describe_instance_status(InstanceIds=[instance_id,], IncludeAllInstances=True)
+    if response['InstanceStatuses'][0]['InstanceState']['Name'] == "running":
         print("The instance with id {} is successfully started with new instance type {}".format(instance_id, target_type))
         break
     elif retries == 6:
