@@ -2,7 +2,8 @@
 import sys
 import boto3
 import time
-from botocore.exceptions import ClientError
+
+sys.stdout.flush()
 
 instance_id = sys.argv[1]
 target_type = sys.argv[2]
@@ -16,13 +17,14 @@ describeEc2Status = ec2C.describe_instance_status(InstanceIds=[instance_id,], In
 if describeEc2Status['InstanceStatuses'][0]['InstanceState']['Name'] == "running":
     ec2C.stop_instances(InstanceIds=[instance_id,])
     for retries in range(1,7):
-        response = ec2C.describe_instance_status(InstanceIds=[instance_id,], IncludeAllInstances=True)
-        if response['InstanceStatuses'][0]['InstanceState']['Name'] != "stopped":
+       // response = ec2C.describe_instance_status(InstanceIds=[instance_id,], IncludeAllInstances=True)
+        response = ec2C.Instance(instance_id)
+        if response.state['Name'] != "stopped":
             if retries == 6:
                 print("Instance is taking longer than usual time to stop. Better check the status in console")
                 break
             time.sleep(retries*60)
-        elif response['InstanceStatuses'][0]['InstanceState']['Name'] == "stopped":
+        elif response.state['Name'] == "stopped":
             print("Instance successfully stopped")
             break
 
@@ -33,9 +35,10 @@ ec2C.modify_instance_attribute(
     },
 )
 
-response = ec2C.start_instances(InstanceIds=[instance_id,])
+ec2C.start_instances(InstanceIds=[instance_id,])
 for retries in range(1,7):
-    if response['StartingInstances'][0]['CurrentState']['Name'] == "running":
+    response = ec2C.Instance(instance_id)
+    if response.state['Name'] == "running":
         print("The instance with id {} is successfully started with new instance type {}".format(instance_id, target_type))
         break
     elif retries == 6:
