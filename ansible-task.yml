@@ -1,5 +1,6 @@
 ---
 - name: OpsTree solution
+  hosts: 13.232.175.129
   tasks:
   - name: Simple GET operation
     aws_s3:
