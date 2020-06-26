@@ -46,5 +46,5 @@ for retries in range(1,7):
         break
     time.sleep(retries*60)
 
-upgradedEc2 = ec2C.describe_instances(InstanceIds=[instance_id,], IncludeAllInstances=True)
+upgradedEc2 = ec2C.describe_instances(InstanceIds=[instance_id,])
 upgradedEc2Ip = upgradedEc2['Reservations'][0]['Instances'][0]['PublicIpAddress']
