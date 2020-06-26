@@ -17,6 +17,7 @@ if describeEc2Status['InstanceStatuses'][0]['InstanceState']['Name'] == "running
     ec2C.stop_instances(InstanceIds=[instance_id,])
     for retries in range(1,7):
         response = ec2C.describe_instance_status(InstanceIds=[instance_id,])
+        print(response)
         if response['InstanceStatuses'][0]['InstanceState']['Name'] != "stopped":
             if retries == 6:
                 print("Instance is taking longer than usual time to stop. Better check the status in console")
