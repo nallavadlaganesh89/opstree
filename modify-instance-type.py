@@ -7,7 +7,7 @@ from botocore.exceptions import ClientError
 instance_id = sys.argv[1]
 target_type = sys.argv[2]
 
-ec2C = boto3.client('ec2')
+ec2C = boto3.client('ec2', region_name='ap-south-1')
 
 describeEc2 = ec2C.describe_instances(InstanceIds=[instance_id,])
 source_type = describeEc2['Reservations'][0]['Instances'][0]['InstanceType']
