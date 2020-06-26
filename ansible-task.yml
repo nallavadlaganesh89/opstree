@@ -6,5 +6,5 @@
     aws_s3:
       bucket: test-s3-deploy-1
       object: /akhil-logs/2020-06-01-17-17-13-8FBF8437906EBB60
-      dest: /tmp/"{{ randstring }}"/myfile.txt
+      dest: /tmp/myfile.txt
       mode: get
