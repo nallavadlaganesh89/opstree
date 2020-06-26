@@ -1,6 +1,5 @@
 ---
-- hosts: "{{ instance_ip }}"
-  become: true
+- name: OpsTree solution
   tasks:
   - name: Simple GET operation
     aws_s3:
