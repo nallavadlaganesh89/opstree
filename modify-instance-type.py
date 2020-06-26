@@ -17,7 +17,7 @@ describeEc2Status = ec2C.describe_instance_status(InstanceIds=[instance_id,], In
 if describeEc2Status['InstanceStatuses'][0]['InstanceState']['Name'] == "running":
     ec2C.stop_instances(InstanceIds=[instance_id,])
     for retries in range(1,7):
-       // response = ec2C.describe_instance_status(InstanceIds=[instance_id,], IncludeAllInstances=True)
+       # response = ec2C.describe_instance_status(InstanceIds=[instance_id,], IncludeAllInstances=True)
         response = ec2C.Instance(instance_id)
         if response.state['Name'] != "stopped":
             if retries == 6:
