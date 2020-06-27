@@ -7,9 +7,6 @@
       url: https://bootstrap.pypa.io/get-pip.py
       dest: /tmp/
       mode: '0775'
-  - name: Installing pip module and downloading boto3
-    shell: |
-      pip install boto3
   - name: Downloading S3 object to tmp folder
     aws_s3:
       bucket: test-s3-deploy-1
