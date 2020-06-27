@@ -18,6 +18,9 @@ if len(describeEc2['Reservations'][0]['Instances']) == 0:
    sys.exit("There is no instance matching the provided instance id") 
 
 source_type = describeEc2['Reservations'][0]['Instances'][0]['InstanceType']
+f = open( 'initialtype', 'w' )
+f.write(source_type)
+f.close()
 describeEc2Status = ec2C.describe_instance_status(InstanceIds=[instance_id,], IncludeAllInstances=True)
 
 if describeEc2Status['InstanceStatuses'][0]['InstanceState']['Name'] == "running":
