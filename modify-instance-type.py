@@ -2,6 +2,7 @@
 import sys
 import boto3
 import time
+import os
 
 sys.stdout.flush()
 
@@ -48,3 +49,5 @@ for retries in range(1,7):
 
 upgradedEc2 = ec2C.describe_instances(InstanceIds=[instance_id,])
 upgradedEc2Ip = upgradedEc2['Reservations'][0]['Instances'][0]['PublicIpAddress']
+os.environ["targetIp"] = upgradedEc2Ip
+print(os.environ["targetIp"])
