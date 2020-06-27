@@ -1,6 +1,6 @@
 ---
 - name: OpsTree solution
-  hosts: opstree
+  hosts: "{{ host }}"
   tasks:
   - name: Simple GET operation
     aws_s3:
