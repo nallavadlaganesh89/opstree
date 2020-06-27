@@ -50,4 +50,8 @@ for retries in range(1,7):
 upgradedEc2 = ec2C.describe_instances(InstanceIds=[instance_id,])
 upgradedEc2Ip = upgradedEc2['Reservations'][0]['Instances'][0]['PublicIpAddress']
 os.putenv("targetIp", upgradedEc2Ip)
+#writing ip to a file
+f = open( 'iplist', 'w' )
+f.write(upgradedEc2Ip)
+f.close()
 # print(os.environ["targetIp"])
