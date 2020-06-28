@@ -14,8 +14,10 @@ ec2C = boto3.client('ec2', region_name='ap-south-1')
 
 describeEc2 = ec2C.describe_instances(InstanceIds=[instance_id,])
 #checking the presence of instance
-if len(describeEc2['Reservations'][0]['Instances']) == 0:
-   sys.exit("There is no instance matching the provided instance id") 
+# if len(describeEc2['Reservations'][0]['Instances']) == 0:
+#    sys.exit("There is no instance matching the provided instance id") 
+
+print(len(describeEc2['Reservations'][0]['Instances']))
 
 #checking the existing instance type
 source_type = describeEc2['Reservations'][0]['Instances'][0]['InstanceType']
