@@ -17,7 +17,11 @@ describeEc2 = ec2C.describe_instances(InstanceIds=[instance_id,])
 if len(describeEc2['Reservations'][0]['Instances']) == 0:
    sys.exit("There is no instance matching the provided instance id") 
 
+#checking the existing instance type
 source_type = describeEc2['Reservations'][0]['Instances'][0]['InstanceType']
+if source_type == target_type:
+   typeError = "The existing instance is already of type {}".format(target_type)
+   sys.exit(typeError)
 f = open( 'initialtype', 'w' )
 f.write(source_type)
 f.close()
