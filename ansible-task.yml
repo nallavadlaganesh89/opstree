@@ -2,7 +2,7 @@
 - name: OpsTree solution
   hosts: "{{ host }}"
   tasks:
-  - name: Downloading pip package
+  - name: Downloading pip packagess
     get_url:
       url: https://bootstrap.pypa.io/get-pip.py
       dest: /tmp/
